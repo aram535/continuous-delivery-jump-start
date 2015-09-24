@@ -1,0 +1,21 @@
+test {
+    reports {
+        html.destination = file("$html.destination/unit")
+        junitXml.destination = file("$junitXml.destination/unit")
+    }
+    
+    maxParallelForks = 2
+    
+    testLogging {
+        events 'skipped'
+    }
+}
+
+clean { 
+	delete test.reports.html.destination 
+}
+clean.delete(test.reports.junitXml.destination)
+
+
+// html.destination can be replaced with getHtml().destination
+//    'html' is a groovy shortcut for getHtml() -- which is also a setter

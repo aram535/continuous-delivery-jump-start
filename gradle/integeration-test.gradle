@@ -1,0 +1,25 @@
+sourceSets {
+	integrationTest {
+		java.srcDir file('src/integTest/java')
+		resources.srcDir file('src/integTest/resources')
+		compileClasspath += sourceSets.main.output + configurations.testRuntime
+		runtimeClasspath += output + compileClasspath
+	}
+}
+
+task integrationTest (type: Test) {
+	mustRunAfter test		// this makes the integeration run after the unit tests are completed
+	testClassesDir = sourceSets.integrationTest.output.classesDir 
+	classpath = sourceSets.integrationTest.runtimeClasspath 
+	reports { 
+		html.destination = file ("$reports.html.destination/integration")
+		junitXml.destination = file("$reports.junitXml.destination/integration")
+	}
+}
+
+dependencies { 
+	integrationTestCompile 'org.springframework:spring-test:4.1.1.RELEASE'
+}
+
+// check is a better place to combine the tests together rather than the 'test' task 
+check.dependsOn integrationTest

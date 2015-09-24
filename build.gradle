@@ -11,6 +11,8 @@ buildscript {
 apply plugin: 'war'
 apply plugin: 'idea'
 apply plugin: 'com.bmuschko.tomcat'
+apply from: "$rootDir/gradle/unit-test.gradle" 
+apply from: "$rootDir/gradle/integeration-test.gradle"
 
 group = 'org.gradle.training'
 
